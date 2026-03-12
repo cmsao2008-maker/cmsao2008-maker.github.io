@@ -13,6 +13,28 @@ body {
     -webkit-font-smoothing: antialiased; /* 让文字更清晰 */
 }
 
+/*----LOGO 设置----*/
+.logo {
+    display: flex;
+    align-items: center; 
+    height: 45px;        /* 保持你想要的导航栏 LOGO 高度 */
+}
+
+.logo a {
+    display: flex;       /* 必须：让 a 标签也成为 flex 容器 */
+    align-items: center;
+    height: 100%;        /* 关键：让 a 标签继承 .logo 的 40px */
+    width: auto;
+}
+
+.logo img {
+    height: 100% !important; /* 现在它会继承 a 的 40px 了 */
+    width: auto !important;  
+    display: block;
+    object-fit: contain;     /* 确保图片不失真 */
+}
+/*----LOGO 设置----*/
+
 /* --- 2. 导航栏 (毛玻璃) --- */
 .navbar {
     position: fixed;
@@ -21,15 +43,86 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 5%;
-    z-index: 1000;
+    /* 原本是 padding: 20px 5%; */
+    /* 改為：上 右 下 左 */
+    padding: 20px 10% 20px 5%;
+    z-index: 9999; /* 确保在最顶层 */
     background: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
 }
 
-.logo { font-weight: 700; font-size: 1.2rem; letter-spacing: 2px; }
+
 .nav-links { display: flex; list-style: none; gap: 30px; }
-.nav-links a { text-decoration: none; color: #1d1d1f; font-size: 14px; }
+.nav-links a { text-decoration: none; color: #1d1d1f; font-size: 16px; font-weight: 500; }
+
+/* 新增：导航右侧交互容器 */
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-actions i {
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    transition: opacity 0.3s;
+}
+
+/* 语言选择器布局 - 替换版 */
+.lang-selector {
+    position: relative;
+    display: flex;       /* 必须：让文字和图标水平排列 */
+    align-items: center; /* 必须：让文字和图标垂直居中对齐 */
+    gap: 8px;           /* 核心：控制文字与图标之间的距离，建议 6px-10px */
+    cursor: pointer;
+}
+
+/* 补充：让文字看起来更精致 */
+.lang-text {
+    font-size: 13px;
+    font-weight: 500;
+    color: #1d1d1f;
+    line-height: 1;    /* 消除多余的行高，防止对齐偏移 */
+}
+
+.lang-dropdown {
+    position: absolute;
+    top: 35px;
+    right: 0;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    padding: 10px 0;
+    display: none; /* 初始隐藏 */
+    min-width: 120px;
+    border: 1px solid #eee;
+}
+
+.lang-dropdown.show {
+    display: block; /* JS控制显示 */
+}
+
+.lang-dropdown span {
+    display: block;
+    padding: 8px 20px;
+    font-size: 13px;
+    cursor: pointer;
+    color: #333;
+}
+
+.lang-dropdown span:hover {
+    background: #f5f5f7;
+}
+
+/* 购物车样式 */
+.cart-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
 
 /* --- 3. Hero Section --- */
 .hero {
@@ -72,22 +165,97 @@ body {
 }
 .btn-primary:hover { background: #fff; color: #000; }
 
-/* --- 4. 品牌价值 (Values) --- */
-.values {
-    display: flex;
-    justify-content: center;
-    gap: 60px;
-    padding: 100px 5%;
-    text-align: center;
+/* --- 4. 分类列表块优化版 (category-section)开始 --- */
+.category-section {
+    width: 100%;
+    max-width: 1440px; /* 确保与下方 Featured Products 的最大宽度对齐 */
+    margin: 0 auto;
+    /* 关键修改：减少左右 padding，如果设为 0，图片会变到最大 */
+    padding:20px 0;
 }
 
-.value-item { flex: 1; max-width: 300px; }
-.value-item .icon { font-size: 2.5rem; margin-bottom: 20px; display: block; }
-.value-item p { font-size: 14px; color: #86868b; }
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr); /* 依然保持 8 列 */
+    /* 关键修改：gap 是图标之间的距离。
+       如果 gap 越小，分配给每个图片的宽度就越大 */
+    width: 100%;      /* 必须是 100% */
+    gap: 6px;
+    /* 关键：如果下方的产品板块有左右 5% 的边距，这里也必须设为完全一样 */
+    padding: 0; 
+    box-sizing: border-box;
+}
+
+.category-item {
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.category-img {
+    width: 100%; /* 关键：撑满 grid 列的宽度 */
+    aspect-ratio: 1 / 1; 
+    background-color: #f5f5f7;
+    /* 修改：从 50% (圆形) 改为更高级的圆角矩形 */
+    border-radius: 18px; 
+    overflow: hidden;
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.category-img img {
+    /* 修改：让产品图片稍微大一点，占容器的 85% */
+    width: 90%; 
+    height: 90%;
+    object-fit: contain;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.category-item:hover .category-img {
+    background-color: #ebebee; /* 悬停时背景微深 */
+}
+
+.category-item:hover img {
+    transform: scale(1.08); /* 轻微放大 */
+}
+
+.category-item span {
+    font-size: 13px;
+    font-weight: 500;
+    color: #1d1d1f;
+    /* 增加字母间距，提升精致感 */
+    letter-spacing: 0.5px; 
+    text-align: center;
+}
+/* --- 4. 分类列表块优化版 (category-section)结束 --- */
+
+/* 响应式：平板端显示 4 个 */
+@media (max-width: 1024px) {
+    .category-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 30px 15px;
+    }
+}
+
+/* 响应式：手机端显示 4 个（两行） */
+@media (max-width: 480px) {
+    .category-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px 10px;
+    }
+    .category-item span {
+        font-size: 11px;
+    }
+}
 
 /* --- Featured Products Section (单张步进自动滚动版) --- */
 .product-section {
-    padding: 80px 0;
+    padding: 60px 0;
     max-width: 1440px;
     margin: 0 auto;
     text-align: center;
@@ -147,19 +315,16 @@ body {
     flex-direction: column;
 }
 
-/* 移动端适配：一行显示两个，且同样具备吸附感 */
-@media (max-width: 768px) {
-    .product-card {
-        flex: 0 0 50%;
-        min-width: 50%;
-    }
-}
 
 .img-container {
+    /* 1. 设置圆角大小，这里使用的是 Grovemade/Apple 风格的 12px */
+    border-radius: 12px;
+
     background-color: #f5f5f7;
     /* 1. 将比例从 1/1 改为 3/4 */
     aspect-ratio: 3 / 4;        
     margin-bottom: 15px;
+    /* 2. 核心：裁剪溢出。没有这一行，图片悬停放大时圆角会失效 */
     overflow: hidden;
     display: flex;
     justify-content: center;
@@ -178,13 +343,41 @@ body {
 .product-name { font-size: 14px; font-weight: 500; margin-bottom: 4px; color: #1d1d1f; }
 .price { font-size: 14px; color: #6e6e73; }
 
+/*----响应式设置开始---*/
 /* 移动端适配：一行显示两个 (50%) */
 @media (max-width: 768px) {
     .product-card {
         flex: 0 0 50%;
         min-width: 50%;
     }
+
+    .navbar {
+        padding: 10px 5%; /* 手机端减小内边距 */
+    }
+    .logo {
+        height: 30px;     /* 手机端 LOGO 再小一点，更精致 */
+    }
 }
+
+/* 响应式：平板端显示 4 个 */
+@media (max-width: 1024px) {
+    .category-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 30px 15px;
+    }
+}
+
+/* 响应式：手机端显示 4 个（两行） */
+@media (max-width: 480px) {
+    .category-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px 10px;
+    }
+    .category-item span {
+        font-size: 11px;
+    }
+}
+/*----响应式设置结束---*/
 
 /* --- 7. Footer --- */
 footer { background: #1d1d1f; color: #86868b; padding: 80px 5% 40px; }
