@@ -52,3 +52,46 @@ grid.addEventListener('mouseleave', () => {
     clearInterval(scrollTimer); // 先确保旧的彻底死了
     scrollTimer = setInterval(autoScroll, 8000); // 再起个新的
 });
+
+// 头部右侧图片，语言选择和购物车
+// 1. 初始化图标 (必须有这行，否则图标不显示)
+lucide.createIcons();
+
+// 2. 语言下拉菜单控制
+// 1. 获取所有需要的元素
+const langBtn = document.getElementById('langBtn');
+const langMenu = document.getElementById('langMenu');
+const langText = document.querySelector('.lang-text'); // 确保 HTML 里有这个 class
+const langOptions = document.querySelectorAll('.lang-dropdown span');
+
+if (langBtn && langMenu) {
+    // 2. 点击地球区域：切换下拉菜单的显示/隐藏
+    langBtn.addEventListener('click', (e) => {
+        e.stopPropagation(); // 阻止点击事件冒泡到 document
+        langMenu.classList.toggle('show');
+    });
+
+    // 3. 点击菜单选项：切换文字内容并关闭菜单
+    langOptions.forEach(option => {
+        option.addEventListener('click', (e) => {
+            e.stopPropagation(); // 避免触发父级的 toggle 导致菜单关了又开
+            
+            // 更新显示的文本
+            if (langText) {
+                if (option.textContent.includes('English')) {
+                    langText.textContent = 'EN';
+                } else if (option.textContent.includes('中文')) {
+                    langText.textContent = '中文';
+                }
+            }
+            
+            // 选完后自动隐藏菜单
+            langMenu.classList.remove('show');
+        });
+    });
+
+    // 4. 点击页面其他地方：强制隐藏菜单
+    document.addEventListener('click', () => {
+        langMenu.classList.remove('show');
+    });
+}
