@@ -4,23 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ERGOS | Premium Ergonomic Solutions</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="style-css/style.css">
 </head>
 <body>
 
     <header class="navbar">
-        <div class="logo">ERGOS</div>
+        <div class="logo">
+            <a href="index.html">
+                <img src="pic/logo.png" alt="ERGOS">
+            </a>
+        </div>
         <nav>
             <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
                 <li><a href="#products">Products</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
-        <div class="lang-switcher">
-            <a href="#" class="active">EN</a>
-            <span>|</span>
-            <a href="#">中文</a>
+        <div class="nav-actions">
+            <div class="lang-selector" id="langBtn">
+                <span class="lang-text">EN</span> <i data-lucide="globe"></i> <div class="lang-dropdown" id="langMenu">
+                    <span onclick="changeLang('en')">English</span>
+                    <span onclick="changeLang('zh')">简体中文</span>
+                </div>
+            </div>
+
+            <div class="cart-icon">
+                <i data-lucide="shopping-cart"></i>
+            </div>
         </div>
     </header>
 
@@ -37,21 +50,27 @@
             </div>
         </section>
 
-        <section class="values">
-            <div class="value-item">
-                <div class="icon">🌐</div>
-                <h3>GLOBAL SHIPPING</h3>
-                <p>Reliable logistics for global B2B partners.</p>
-            </div>
-            <div class="value-item">
-                <div class="icon">🌱</div>
-                <h3>SUSTAINABLE</h3>
-                <p>Aerospace-grade recyclable aluminum.</p>
-            </div>
-            <div class="value-item">
-                <div class="icon">🛠️</div>
-                <h3>OEM/ODM</h3>
-                <p>Custom solutions for your brand.</p>
+        <section class="category-section">
+            <div class="category-grid">
+                <a href="#" class="category-item">
+                    <div class="category-img">
+                        <img src="pic/products001.webp" alt="Chairs">
+                    </div>
+                    <span>Chairs</span>
+                </a>
+                <a href="#" class="category-item">
+                    <div class="category-img"><img src="pic/pc_desktop.webp" alt="Desks"></div>
+                    <span>Desks</span>
+                </a>
+                <a href="#" class="category-item">
+                    <div class="category-img"><img src="pic/keyboard.webp" alt="Arms"></div>
+                    <span>keyboard</span>
+                </a>
+                <a href="#" class="category-item">
+                    <div class="category-img"><img src="pic/bbj.webp" alt="Lighting"></div>
+                    <span>Back brace</span>
+                </a>
+
             </div>
         </section>
 
@@ -72,7 +91,7 @@
                 <article class="product-card">
                     <a href="#">
                         <div class="img-container">
-                            <img src="pic/adjustable-monitor-arm-white.webp" alt="Product Name">
+                            <img src="pic/ssk1.webp" alt="Product Name">
                         </div>
                         <div class="product-info">
                             <h4 class="product-name">Wool Felt Studio Pad (Walnut)</h4>
@@ -83,10 +102,10 @@
                 <article class="product-card">
                     <a href="#">
                         <div class="img-container">
-                            <img src="pic/adjustable-monitor-arm-white.webp" alt="Product Name">
+                            <img src="pic/Ergonomic Office Chair.webp" alt="Product Name">
                         </div>
                         <div class="product-info">
-                            <h4 class="product-name">Wool Felt Studio Pad (Walnut)</h4>
+                            <h4 class="product-name">Ergonomic Office Chair (Walnut)</h4>
                             <p class="price">$240</p>
                         </div>
                     </a>
@@ -94,10 +113,10 @@
                 <article class="product-card">
                     <a href="#">
                         <div class="img-container">
-                            <img src="pic/adjustable-monitor-arm-white.webp" alt="Product Name">
+                            <img src="pic/Ergonomic Keyboard.webp" alt="Product Name">
                         </div>
                         <div class="product-info">
-                            <h4 class="product-name">Wool Felt Studio Pad (Walnut)</h4>
+                            <h4 class="product-name">Ergonomic Keyboard (Walnut)</h4>
                             <p class="price">$240</p>
                         </div>
                     </a>
@@ -163,5 +182,9 @@
     </footer>
 
     <script src="style-js/script.js"></script>
+    <!-- /* --- 激活语言选择和购物车图标 --- */ -->
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 </html>
